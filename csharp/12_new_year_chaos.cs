@@ -10,42 +10,41 @@ namespace csharp
         {
             List<int> q = new List<int>(){1, 2, 5, 3, 7, 8, 6, 4};
 		
-            Dictionary<int, int> history = new Dictionary<int, int>();		
+            int movements = 0;
+            int p1 = 1;   
+            int p2 = 2;   
+            int p3 = 3;   
             
-            for(int i = 0; i < q.Count(); i++)
+            foreach(var item in q)
             {
-                int expectedVal = i+1;			
-                
-                while(q[i] > expectedVal && q.Count() >= q[i])
+                if(item == p1)
                 {
-                    expectedVal++;
-                    
-                    if(!history.ContainsKey(q[i]))
-                    {
-                        history.Add(q[i], 1);
-                    }
-                    else
-                    {
-                        history[q[i]] = history[q[i]] + 1;
-                    }
+                    // 1 2 3
+                    p1 = p2;
+                    p2 = p3;
+                    p3++;
+                }
+                else if(item == p2)
+                {
+                    // 2 1 3
+                    movements++;
+                    p2 = p3;
+                    p3++;
+                }
+                else if(item == p3)
+                {
+                    // 3 1 2
+                    movements += 2;
+                    p3++;
+                }
+                else
+                {
+                    Console.WriteLine("Too chaotic");
+                    return;
                 }
             }
             
-            int totalMovements = 0;
-            foreach(var item in history)
-            {
-                if(item.Value > 2)
-                {
-                    Console.WriteLine("Too chaotic");
-                }
-                
-                totalMovements += item.Value;
-            }	
-            
-            if(totalMovements != 0)
-            {
-                Console.WriteLine(totalMovements);
-            }	
+            Console.WriteLine(movements);
         }
     }
 }
