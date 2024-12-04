@@ -6,27 +6,21 @@ namespace csharp
     {
         public static void Main()
         {
-            var result = new SinglyLinkedListNode(0);
-            var current = result;
-            
-            while(head1 != null && head2 != null) {
-                if (head1.data < head2.data) {
-                    current.next = head1;
-                    head1 = head1.next;
-                } else {
-                    current.next = head2;
-                    head2 = head2.next;
-                }
-                current = current.next;
+            if(head1 == null){
+                return head2;
             }
-            
-            if (head1 != null) {
-                current.next = head1;
-            } else if (head2 != null) {
-                current.next = head2;
+            if(head2 == null){
+                return head1;
             }
-            
-            return result.next;
+            if (head1.data > head2.data){
+                
+                head2.next =  mergeLists(head1, head2.next);
+                return head2;
+            }
+            else{
+                head1.next =  mergeLists(head1.next, head2);
+                return head1;
+            }
         }
     }
 }
